@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Autofaya - Automate Customer Conversations</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#5c647a",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#952200",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary-fixed-dim": "#ffb4a1",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#131b2e",
+                        "on-background": "#0b1c30",
+                        "surface": "#FDFCFB", /* Warm off-white from requirements */
+                        "tertiary-fixed": "#ffdbd2",
+                        "surface-container-high": "#dce9ff",
+                        "primary-fixed-dim": "#b7c4ff",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#3c0800",
+                        "surface-container-low": "#eff4ff",
+                        "on-primary-fixed": "#001452",
+                        "error": "#ba1a1a",
+                        "on-surface": "#1E2329", /* Deep charcoal */
+                        "surface-tint": "#004ced",
+                        "on-tertiary-container": "#ffddd5",
+                        "on-secondary-fixed-variant": "#3f465c",
+                        "surface-variant": "#E2E8F0", /* Light neutral for borders */
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#dde1ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-tertiary-fixed-variant": "#891e00",
+                        "secondary-fixed-dim": "#bec6e0",
+                        "tertiary-container": "#bf3003",
+                        "on-primary-fixed-variant": "#0038b6",
+                        "outline": "#737688",
+                        "primary-container": "#0052FF", /* Brand blue */
+                        "inverse-primary": "#b7c4ff",
+                        "on-error": "#ffffff",
+                        "surface-container": "#e5eeff",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#565e74",
+                        "secondary-fixed": "#dae2fd",
+                        "secondary-container": "#dae2fd",
+                        "on-primary-container": "#ffffff",
+                        "primary": "#0052FF", /* Brand blue */
+                        "outline-variant": "#c3c5d9",
+                        "on-surface-variant": "#434656",
+                        "inverse-surface": "#213145",
+                        "surface-dim": "#cbdbf5",
+                        "on-tertiary": "#ffffff",
+                        "background": "#FDFCFB", /* Warm off-white */
+                        "surface-container-highest": "#d3e4fe",
+                        "whatsapp-green": "#25D366" /* Rich green for WhatsApp */
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "4px", /* Standard 4px radius */
+                        "lg": "4px",
+                        "xl": "4px",
+                        "full": "4px" /* Replaced pill buttons with 4px */
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "xl": "40px",
+                        "gutter": "24px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "margin": "32px",
+                        "unit": "4px",
+                        "xxl": "64px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Manrope", "sans-serif"],
+                        "headline-lg": ["Manrope", "sans-serif"],
+                        "body-md": ["Work Sans", "sans-serif"],
+                        "headline-xl": ["Manrope", "sans-serif"],
+                        "label-md": ["Work Sans", "sans-serif"],
+                        "body-lg": ["Work Sans", "sans-serif"],
+                        "label-sm": ["Work Sans", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="sticky top-0 w-full z-50 bg-[#FDFCFB] border-b border-surface-variant dark:border-stone-800 transition-all duration-200" id="top-nav">
+<div class="flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
+<!-- Brand -->
+<a class="flex items-center gap-2 text-xl font-bold text-stone-900 dark:text-stone-50 font-['Manrope']" href="#">
+<img alt="Autofaya Logo" class="h-8 w-auto" data-alt="Minimalist flat geometric logo for Autofaya in brand blue #0052FF" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBd6aF3m6Ct_ZU2rk3uB4Up5nDj0IKcuDLTVYNBb-YSgcbgP-kO8ueChX0pA9BxgM4eKmeQB5Skm9M-3yMRBcV2bPxBH7SOssa6kJSwCRpyWPJDKHoLxUj6AO2rn6kgrlSD7cd2obPo5VoTVMCUCKUysxI2H7VMjvWD54dTMFYo3k2KKlKDGFU0-wsM494KK4RAXonKWY_9mJ3SUrI502vaXnARkLxsmTa5c70gTt9ekSlYKfqz32u2iyBCaNcAQtkhtstt21Nlw74"/>
+<span>Autofaya</span>
+</a>
+<!-- Navigation Links (Hidden on mobile) -->
+<div class="hidden md:flex items-center gap-8">
+<a class="text-stone-600 hover:bg-stone-100 hover:text-[#0052FF] transition-colors font-['Manrope'] font-medium text-sm tracking-tight px-3 py-2 rounded" href="#whatsapp">WhatsApp</a>
+<a class="text-stone-600 hover:bg-stone-100 hover:text-[#0052FF] transition-colors font-['Manrope'] font-medium text-sm tracking-tight px-3 py-2 rounded" href="#ai-chatbots">AI Chatbots</a>
+<a class="text-stone-600 hover:bg-stone-100 hover:text-[#0052FF] transition-colors font-['Manrope'] font-medium text-sm tracking-tight px-3 py-2 rounded" href="#email">Email</a>
+<a class="text-stone-600 hover:bg-stone-100 hover:text-[#0052FF] transition-colors font-['Manrope'] font-medium text-sm tracking-tight px-3 py-2 rounded" href="#widgets">Widgets</a>
+<a class="text-stone-600 hover:bg-stone-100 hover:text-[#0052FF] transition-colors font-['Manrope'] font-medium text-sm tracking-tight px-3 py-2 rounded" href="#pricing">Pricing</a>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<a class="hidden sm:block text-stone-600 font-['Manrope'] font-medium text-sm hover:text-[#0052FF] transition-colors" href="/login">Login</a>
+<a class="bg-[#0052FF] text-white font-['Manrope'] font-medium text-sm px-5 py-2.5 rounded hover:opacity-90 transition-opacity" href="/signup">Get Started</a>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-stone-900 p-2">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main>
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto px-8 py-20 lg:py-32 grid lg:grid-cols-2 gap-16 items-center relative">
+<!-- Background Illustration -->
+<div class="absolute inset-0 z-0 flex items-center justify-center overflow-hidden pointer-events-none">
+<img alt="Background Illustration" class="w-full h-full object-contain opacity-20 transform scale-110 md:scale-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvBmf0oEgXvrMMSrzYI5zhSIB09bNmmlc7CbHSgC1HUFCu8LQDxZNvGOp1G0rS7uEqqTmyVr_60FMp3c72MUpHKZ-i3w3u_Qeel5STqoK6tNyRTtiJkOKxkwZ0X8ISFKbpgbX1_sMfEZ0zESovrVNZA8AXZcVr85ZrXLPPHOFox9uamHBpdsn3xjBDzL5RVnf8vWGNNSPUmzyenWGE0QjqHi45qkE-Z1fndBkakAOUAud4NBIq5yqfbuvk6CLIQ8e85UXhrzJLrxA"/>
+</div>
+<!-- Hero Content -->
+<div class="relative z-10 flex flex-col gap-8">
+<div class="inline-flex items-center gap-2 bg-surface-variant/30 text-on-surface px-3 py-1.5 rounded-DEFAULT text-sm font-label-sm border border-surface-variant w-fit">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+            The unified automation platform
+        </div>
+<h1 class="font-headline-xl text-on-surface leading-tight">
+            Automate every customer conversation from one place.
+        </h1>
+<p class="font-body-lg text-on-surface-variant max-w-lg">
+            Build powerful flows across WhatsApp, AI chatbots, email, and website widgets. Connect with your customers where they already are, instantly.
+        </p>
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+<a class="inline-flex justify-center items-center px-8 py-3.5 bg-primary text-on-primary font-label-md rounded-DEFAULT hover:opacity-90 transition-opacity" href="#">
+                Start Free
+            </a>
+<a class="inline-flex justify-center items-center px-8 py-3.5 bg-transparent border border-on-surface text-on-surface font-label-md rounded-DEFAULT hover:bg-surface-variant transition-colors" href="#">
+                Book Demo
+            </a>
+</div>
+</div>
+<div class="relative z-10">
+<!-- Dashboard Mockup -->
+<div class="bg-white border border-surface-variant rounded-lg overflow-hidden flex flex-col h-[500px] shadow-xl">
+<!-- Browser Chrome -->
+<div class="bg-surface border-b border-surface-variant px-4 py-3 flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-surface-variant"></div>
+<div class="w-3 h-3 rounded-full bg-surface-variant"></div>
+<div class="w-3 h-3 rounded-full bg-surface-variant"></div>
+</div>
+<!-- Dashboard Content -->
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar -->
+<div class="w-16 border-r border-surface-variant bg-surface flex flex-col items-center py-4 gap-6">
+<div class="p-2 text-primary bg-primary/10 rounded"><span class="material-symbols-outlined">forum</span></div>
+<div class="p-2 text-on-surface-variant hover:bg-surface-variant rounded"><span class="material-symbols-outlined">account_tree</span></div>
+<div class="p-2 text-on-surface-variant hover:bg-surface-variant rounded"><span class="material-symbols-outlined">group</span></div>
+<div class="p-2 text-on-surface-variant hover:bg-surface-variant rounded"><span class="material-symbols-outlined">bar_chart</span></div>
+</div>
+<!-- Inbox List -->
+<div class="w-64 border-r border-surface-variant bg-white flex flex-col">
+<div class="p-4 border-b border-surface-variant font-label-md">Active Chats</div>
+<div class="flex-1 overflow-y-auto">
+<div class="p-4 border-b border-surface-variant hover:bg-surface-variant/20 cursor-pointer flex gap-3">
+<div class="w-10 h-10 rounded bg-whatsapp-green/20 text-whatsapp-green flex items-center justify-center font-bold">W</div>
+<div>
+<div class="font-label-md text-sm">WhatsApp Lead</div>
+<div class="font-body-md text-xs text-on-surface-variant truncate">How much is pricing?</div>
+</div>
+</div>
+<div class="p-4 border-b border-surface-variant bg-primary/5 border-l-4 border-l-primary flex gap-3">
+<div class="w-10 h-10 rounded bg-primary/20 text-primary flex items-center justify-center font-bold">W</div>
+<div>
+<div class="font-label-md text-sm">Website Widget</div>
+<div class="font-body-md text-xs text-on-surface-variant truncate">I need help with...</div>
+</div>
+</div>
+<div class="p-4 border-b border-surface-variant hover:bg-surface-variant/20 cursor-pointer flex gap-3">
+<div class="w-10 h-10 rounded bg-orange-100 text-orange-600 flex items-center justify-center font-bold">E</div>
+<div>
+<div class="font-label-md text-sm">Email Inquiry</div>
+<div class="font-body-md text-xs text-on-surface-variant truncate">Demo request</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Flow Builder Area -->
+<div class="flex-1 bg-surface-bright p-6 relative">
+<div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#1E2329 1px, transparent 1px); background-size: 20px 20px;"></div>
+<div class="relative z-10 flex flex-col items-center gap-6 mt-10">
+<div class="bg-white border-2 border-on-surface p-4 rounded w-48 text-center shadow-sm">
+<div class="font-label-md">Incoming Message</div>
+<div class="text-xs text-on-surface-variant mt-1">From Any Channel</div>
+</div>
+<div class="w-0.5 h-6 bg-surface-variant"></div>
+<div class="bg-white border border-surface-variant p-4 rounded w-48 text-center shadow-sm relative group hover:border-primary transition-colors">
+<div class="absolute -top-3 -right-3 bg-primary text-white text-[10px] px-2 py-1 rounded font-bold">AI Active</div>
+<div class="font-label-md">Analyze Intent</div>
+</div>
+<div class="w-0.5 h-6 bg-surface-variant"></div>
+<div class="flex gap-8">
+<div class="flex flex-col items-center">
+<div class="w-24 h-0.5 bg-surface-variant -ml-12 mb-6"></div>
+<div class="bg-whatsapp-green text-white p-3 rounded w-32 text-center text-sm font-label-md">Send WhatsApp</div>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-24 h-0.5 bg-surface-variant -mr-12 mb-6"></div>
+<div class="bg-white border border-surface-variant p-3 rounded w-32 text-center text-sm font-label-md">Assign to Human</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section>
+<!-- Feature Grid (Bento Style) -->
+<section class="max-w-7xl mx-auto px-8 py-20 bg-surface">
+<div class="mb-16">
+<h2 class="font-headline-lg text-on-surface max-w-2xl">Precision tools for modern customer communication.</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px]">
+<!-- Feature 1: WhatsApp (Large) -->
+<div class="col-span-1 md:col-span-2 row-span-1 bg-white border border-surface-variant rounded p-8 flex flex-col justify-between hover:border-whatsapp-green transition-colors group">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-on-surface mb-2">WhatsApp Automation</h3>
+<p class="font-body-md text-on-surface-variant max-w-sm">Build dynamic conversational flows on the world's most popular messaging app. Native integration, no code required.</p>
+</div>
+<div class="w-12 h-12 bg-whatsapp-green/10 text-whatsapp-green rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">chat</span>
+</div>
+</div>
+<div class="flex gap-2 mt-4">
+<span class="px-3 py-1 bg-surface-variant/30 text-xs font-label-sm border border-surface-variant rounded">Templates</span>
+<span class="px-3 py-1 bg-surface-variant/30 text-xs font-label-sm border border-surface-variant rounded">Broadcasts</span>
+<span class="px-3 py-1 bg-surface-variant/30 text-xs font-label-sm border border-surface-variant rounded">API Access</span>
+</div>
+</div>
+<!-- Feature 2: AI Chatbots -->
+<div class="col-span-1 row-span-1 bg-white border border-surface-variant rounded p-8 flex flex-col justify-between hover:border-primary transition-colors">
+<div>
+<div class="w-10 h-10 bg-primary/10 text-primary rounded flex items-center justify-center mb-4">
+<span class="material-symbols-outlined">smart_toy</span>
+</div>
+<h3 class="font-headline-md text-on-surface text-xl mb-2">AI Chatbots</h3>
+<p class="font-body-md text-sm text-on-surface-variant">Train AI on your knowledge base to resolve 80% of tier 1 support queries instantly.</p>
+</div>
+</div>
+<!-- Feature 3: Visual Flow Builder -->
+<div class="col-span-1 md:col-span-1 row-span-1 bg-white border border-surface-variant rounded p-8 flex flex-col justify-between hover:border-primary transition-colors">
+<div>
+<div class="w-10 h-10 bg-on-surface/5 text-on-surface rounded flex items-center justify-center mb-4">
+<span class="material-symbols-outlined">schema</span>
+</div>
+<h3 class="font-headline-md text-on-surface text-xl mb-2">Visual Flows</h3>
+<p class="font-body-md text-sm text-on-surface-variant">Drag-and-drop canvas to design complex multi-channel customer journeys.</p>
+</div>
+</div>
+<!-- Feature 4: Shared Inbox (Large) -->
+<div class="col-span-1 md:col-span-2 row-span-1 bg-[#1E2329] text-white rounded p-8 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex-1">
+<h3 class="font-headline-md mb-2">Shared Team Inbox</h3>
+<p class="font-body-md text-surface-variant mb-6">Unify WhatsApp, Email, and Web Widgets into a single collaborative workspace for your support and sales teams.</p>
+<a class="inline-flex items-center gap-2 text-primary-fixed-dim hover:text-white font-label-md transition-colors" href="#">
+                            Explore Inbox Features <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="w-full md:w-1/2 bg-white/10 rounded border border-white/20 h-full min-h-[120px] p-4 flex flex-col gap-3">
+<div class="w-full h-8 bg-white/5 rounded flex items-center px-3 gap-2">
+<div class="w-2 h-2 rounded-full bg-whatsapp-green"></div>
+<div class="h-2 w-24 bg-white/20 rounded"></div>
+</div>
+<div class="w-full h-8 bg-white/10 rounded flex items-center px-3 gap-2 border border-white/20">
+<div class="w-2 h-2 rounded-full bg-primary-fixed-dim"></div>
+<div class="h-2 w-32 bg-white/30 rounded"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#FDFCFB] dark:bg-stone-950 w-full border-t border-stone-200 dark:border-stone-800 transition-all duration-200" id="footer">
+<div class="max-w-7xl mx-auto px-8 py-12 flex flex-col md:flex-row justify-between items-center gap-6">
+<!-- Brand -->
+<div class="text-lg font-black text-stone-900 dark:text-stone-50">Autofaya</div>
+<!-- Links -->
+<nav class="flex flex-wrap justify-center gap-6">
+<a class="font-['Manrope'] text-xs font-normal text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100 hover:underline decoration-2 underline-offset-4" href="#product">Product</a>
+<a class="font-['Manrope'] text-xs font-normal text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100 hover:underline decoration-2 underline-offset-4" href="#features">Features</a>
+<a class="font-['Manrope'] text-xs font-normal text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100 hover:underline decoration-2 underline-offset-4" href="#security">Security</a>
+<a class="font-['Manrope'] text-xs font-normal text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100 hover:underline decoration-2 underline-offset-4" href="#privacy-policy">Privacy Policy</a>
+<a class="font-['Manrope'] text-xs font-normal text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100 hover:underline decoration-2 underline-offset-4" href="#terms-of-service">Terms of Service</a>
+<a class="font-['Manrope'] text-xs font-normal text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100 hover:underline decoration-2 underline-offset-4" href="#contact">Contact</a>
+</nav>
+<!-- Copyright -->
+<div class="font-['Manrope'] text-xs font-normal text-stone-500 text-center md:text-right">
+                © 2024 Autofaya. Precision Engineering for Communication.
+            </div>
+</div>
+</footer>
+</body></html>
