@@ -7,6 +7,7 @@
   font-weight: 400;
   color: #0b1c30;
   background: #fdfcfb;
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -16,10 +17,100 @@
   --surface-variant: #e2e8f0;
   --on-surface: #1e2329;
   --on-surface-variant: #434656;
+  --surface-card: #ffffff;
+  --surface-subtle: rgba(226, 232, 240, 0.3);
+  --surface-subtle-hover: rgba(226, 232, 240, 0.2);
+  --nav-bg: rgba(253, 252, 251, 0.96);
+  --nav-link: #57534e;
+  --nav-link-hover-bg: #f5f5f4;
+  --shadow-color: rgba(11, 28, 48, 0.12);
+  --email-accent: #ea580c;
+  --email-accent-bg: #ffedd5;
+  --feature-dark-bg: #1e2329;
+  --feature-dark-border: rgba(255, 255, 255, 0.2);
+  --feature-dark-panel: rgba(255, 255, 255, 0.1);
+  --feature-dark-row: rgba(255, 255, 255, 0.05);
+  --feature-dark-line: rgba(255, 255, 255, 0.25);
+  --feature-dark-line-strong: rgba(255, 255, 255, 0.35);
+  --footer-bg: #fdfcfb;
+  --footer-border: #e7e5e4;
+  --footer-brand: #1c1917;
+  --footer-text: #78716c;
+  --footer-hover: #1c1917;
   --primary: #0052ff;
   --on-primary: #ffffff;
   --primary-fixed-dim: #b7c4ff;
   --whatsapp-green: #25d366;
+}
+
+:root[data-theme='light'] {
+  color: #0b1c30;
+  background: #fdfcfb;
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color: #f5f7fb;
+  background: #0e1525;
+  color-scheme: dark;
+  --surface: #0e1525;
+  --surface-bright: #121c30;
+  --surface-variant: #23324b;
+  --on-surface: #f5f7fb;
+  --on-surface-variant: #a6b4c8;
+  --surface-card: #162237;
+  --surface-subtle: rgba(35, 50, 75, 0.5);
+  --surface-subtle-hover: rgba(35, 50, 75, 0.65);
+  --nav-bg: rgba(14, 21, 37, 0.92);
+  --nav-link: #c5cedb;
+  --nav-link-hover-bg: #18253c;
+  --shadow-color: rgba(0, 0, 0, 0.35);
+  --email-accent: #fb923c;
+  --email-accent-bg: rgba(251, 146, 60, 0.18);
+  --feature-dark-bg: #0b1220;
+  --feature-dark-border: rgba(255, 255, 255, 0.16);
+  --feature-dark-panel: rgba(255, 255, 255, 0.06);
+  --feature-dark-row: rgba(255, 255, 255, 0.04);
+  --feature-dark-line: rgba(255, 255, 255, 0.18);
+  --feature-dark-line-strong: rgba(255, 255, 255, 0.28);
+  --footer-bg: #0e1525;
+  --footer-border: #23324b;
+  --footer-brand: #f5f7fb;
+  --footer-text: #a6b4c8;
+  --footer-hover: #f5f7fb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color: #f5f7fb;
+    background: #0e1525;
+    color-scheme: dark;
+    --surface: #0e1525;
+    --surface-bright: #121c30;
+    --surface-variant: #23324b;
+    --on-surface: #f5f7fb;
+    --on-surface-variant: #a6b4c8;
+    --surface-card: #162237;
+    --surface-subtle: rgba(35, 50, 75, 0.5);
+    --surface-subtle-hover: rgba(35, 50, 75, 0.65);
+    --nav-bg: rgba(14, 21, 37, 0.92);
+    --nav-link: #c5cedb;
+    --nav-link-hover-bg: #18253c;
+    --shadow-color: rgba(0, 0, 0, 0.35);
+    --email-accent: #fb923c;
+    --email-accent-bg: rgba(251, 146, 60, 0.18);
+    --feature-dark-bg: #0b1220;
+    --feature-dark-border: rgba(255, 255, 255, 0.16);
+    --feature-dark-panel: rgba(255, 255, 255, 0.06);
+    --feature-dark-row: rgba(255, 255, 255, 0.04);
+    --feature-dark-line: rgba(255, 255, 255, 0.18);
+    --feature-dark-line-strong: rgba(255, 255, 255, 0.28);
+    --footer-bg: #0e1525;
+    --footer-border: #23324b;
+    --footer-brand: #f5f7fb;
+    --footer-text: #a6b4c8;
+    --footer-hover: #f5f7fb;
+  }
 }
 
 * {

@@ -7,7 +7,7 @@
   top: 0;
   z-index: 50;
   width: 100%;
-  background: rgba(253, 252, 251, 0.96);
+  background: var(--nav-bg);
   border-bottom: 1px solid var(--surface-variant);
   backdrop-filter: blur(12px);
 }
@@ -52,7 +52,7 @@
 .login-link {
   padding: 8px 12px;
   border-radius: 4px;
-  color: #57534e;
+  color: var(--nav-link);
   text-decoration: none;
   font: 500 0.875rem/1.2 'Manrope', sans-serif;
   transition:
@@ -63,13 +63,41 @@
 .nav-links a:hover,
 .login-link:hover {
   color: var(--primary);
-  background: #f5f5f4;
+  background: var(--nav-link-hover-bg);
 }
 
 .nav-actions {
   display: flex;
   align-items: center;
   gap: 16px;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--surface-variant);
+  border-radius: 4px;
+  background: var(--surface-card);
+  color: var(--on-surface);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--primary);
+  background: var(--surface-subtle);
+  color: var(--primary);
+}
+
+.theme-toggle .material-symbols-outlined {
+  font-size: 20px;
 }
 
 .menu-toggle {
@@ -254,8 +282,8 @@
   height: 500px;
   border: 1px solid var(--surface-variant);
   border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 20px 40px rgba(11, 28, 48, 0.12);
+  background: var(--surface-card);
+  box-shadow: 0 20px 40px var(--shadow-color);
 }
 
 .browser-chrome {
@@ -308,7 +336,7 @@
   display: flex;
   flex-direction: column;
   border-right: 1px solid var(--surface-variant);
-  background: #fff;
+  background: var(--surface-card);
 }
 
 .panel-title {
@@ -334,7 +362,7 @@
 }
 
 .chat-row:hover {
-  background: rgba(226, 232, 240, 0.2);
+  background: var(--surface-subtle-hover);
 }
 
 .chat-row.selected {
@@ -364,8 +392,8 @@
 }
 
 .chat-avatar.email {
-  color: #ea580c;
-  background: #ffedd5;
+  color: var(--email-accent);
+  background: var(--email-accent-bg);
 }
 
 .chat-title {
@@ -413,7 +441,7 @@
   padding: 16px;
   border: 1px solid var(--surface-variant);
   border-radius: 4px;
-  background: #fff;
+  background: var(--surface-card);
   text-align: center;
 }
 
@@ -433,7 +461,7 @@
   padding: 4px 8px;
   border-radius: 4px;
   background: var(--primary);
-  color: #fff;
+  color: var(--on-primary);
   font: 700 0.625rem/1 'Work Sans', sans-serif;
 }
 
@@ -485,7 +513,7 @@
   padding: 12px;
   border: 1px solid var(--surface-variant);
   border-radius: 4px;
-  background: #fff;
+  background: var(--surface-card);
   text-align: center;
   color: var(--on-surface);
   font: 600 0.875rem/1.2 'Work Sans', sans-serif;
@@ -534,13 +562,13 @@
   padding: 32px;
   border: 1px solid var(--surface-variant);
   border-radius: 4px;
-  background: #fff;
+  background: var(--surface-card);
 }
 
 .pricing-card-featured {
   position: relative;
   border-color: var(--primary);
-  background: linear-gradient(180deg, rgba(0, 82, 255, 0.05) 0%, #fff 22%);
+  background: linear-gradient(180deg, rgba(0, 82, 255, 0.08) 0%, var(--surface-card) 22%);
 }
 
 .pricing-badge {
@@ -550,7 +578,7 @@
   padding: 6px 10px;
   border-radius: 4px;
   background: var(--primary);
-  color: #fff;
+  color: var(--on-primary);
   font: 600 0.75rem/1 'Work Sans', sans-serif;
   letter-spacing: 0.02em;
 }
@@ -641,7 +669,7 @@
   padding: 32px;
   border: 1px solid var(--surface-variant);
   border-radius: 4px;
-  background: #fff;
+  background: var(--surface-card);
   transition: border-color 0.2s ease;
 }
 
@@ -711,7 +739,7 @@
   height: 40px;
   margin-bottom: 16px;
   color: var(--on-surface);
-  background: rgba(11, 28, 48, 0.05);
+  background: color-mix(in srgb, var(--on-surface) 5%, transparent);
 }
 
 .tag-row {
@@ -725,7 +753,7 @@
   padding: 4px 12px;
   border: 1px solid var(--surface-variant);
   border-radius: 4px;
-  background: rgba(226, 232, 240, 0.3);
+  background: var(--surface-subtle);
   color: var(--on-surface);
   font: 500 0.75rem/1.33 'Work Sans', sans-serif;
 }
@@ -735,12 +763,12 @@
   flex-direction: row;
   align-items: center;
   gap: 32px;
-  background: #1e2329;
-  border-color: #1e2329;
+  background: var(--feature-dark-bg);
+  border-color: var(--feature-dark-bg);
 }
 
 .feature-card-dark:hover {
-  border-color: #1e2329;
+  border-color: var(--feature-dark-bg);
 }
 
 .feature-dark-copy {
@@ -748,7 +776,7 @@
 }
 
 .feature-dark-copy h3 {
-  color: #fff;
+  color: var(--on-primary);
 }
 
 .feature-dark-copy p {
@@ -766,7 +794,7 @@
 }
 
 .feature-link:hover {
-  color: #fff;
+  color: var(--on-primary);
 }
 
 .feature-dark-panel {
@@ -774,9 +802,9 @@
   max-width: 360px;
   min-height: 120px;
   padding: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--feature-dark-border);
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--feature-dark-panel);
 }
 
 .feature-dark-row {
@@ -786,7 +814,7 @@
   height: 32px;
   padding: 0 12px;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--feature-dark-row);
 }
 
 .feature-dark-row + .feature-dark-row {
@@ -794,8 +822,8 @@
 }
 
 .feature-dark-row.active {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--feature-dark-border);
+  background: var(--feature-dark-panel);
 }
 
 .feature-dark-dot {
@@ -816,7 +844,7 @@
   display: block;
   height: 8px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.25);
+  background: var(--feature-dark-line);
 }
 
 .feature-dark-line.short {
@@ -825,12 +853,12 @@
 
 .feature-dark-line.long {
   width: 128px;
-  background: rgba(255, 255, 255, 0.35);
+  background: var(--feature-dark-line-strong);
 }
 
 .site-footer {
-  border-top: 1px solid #e7e5e4;
-  background: #fdfcfb;
+  border-top: 1px solid var(--footer-border);
+  background: var(--footer-bg);
 }
 
 .footer-inner {
@@ -842,7 +870,7 @@
 }
 
 .footer-brand {
-  color: #1c1917;
+  color: var(--footer-brand);
   font: 900 1.125rem/1 'Manrope', sans-serif;
 }
 
@@ -855,13 +883,13 @@
 
 .footer-links a,
 .footer-copy {
-  color: #78716c;
+  color: var(--footer-text);
   text-decoration: none;
   font: 400 0.75rem/1.4 'Manrope', sans-serif;
 }
 
 .footer-links a:hover {
-  color: #1c1917;
+  color: var(--footer-hover);
   text-decoration: underline;
   text-underline-offset: 4px;
 }

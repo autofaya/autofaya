@@ -50,8 +50,24 @@ const pricingPlans = [
 
 const heroSlides = [image1, image2, image3, image4, image5, image6, image7, image8]
 
+type Theme = 'light' | 'dark'
+
+function getInitialTheme(): Theme {
+  if (typeof window === 'undefined') {
+    return 'light'
+  }
+
+  const savedTheme = window.localStorage.getItem('theme')
+  if (savedTheme === 'light' || savedTheme === 'dark') {
+    return savedTheme
+  }
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
 function App() {
   const [activeHeroSlide, setActiveHeroSlide] = useState(0)
+  const [theme, setTheme] = useState<Theme>(getInitialTheme)
   const currentYear = new Date().getFullYear()
 
   useEffect(() => {
@@ -61,6 +77,12 @@ function App() {
 
     return () => window.clearInterval(intervalId)
   }, [])
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    document.documentElement.style.colorScheme = theme
+    window.localStorage.setItem('theme', theme)
+  }, [theme])
 
   return (
     <div className="page-shell">
@@ -80,6 +102,17 @@ function App() {
           </div>
 
           <div className="nav-actions">
+            <button
+              className="theme-toggle"
+              type="button"
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              <span className="material-symbols-outlined">
+                {theme === 'dark' ? 'light_mode' : 'dark_mode'}
+              </span>
+            </button>
             <a className="login-link" href="/login">
               Login
             </a>
