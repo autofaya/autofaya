@@ -1,56 +1,168 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import logo from './assets/autofaya.png'
-import image1 from './assets/1.png'
-import image2 from './assets/2.png'
-import image3 from './assets/3.png'
-import image4 from './assets/4.png'
-import image5 from './assets/5.png'
-import image6 from './assets/6.png'
-import image7 from './assets/7.png'
-import image8 from './assets/8.png'
 import './App.css'
 
 const navLinks = [
-  { href: '#whatsapp', label: 'WhatsApp' },
-  { href: '#ai-chatbots', label: 'AI Chatbots' },
-  { href: '#email', label: 'Email' },
-  { href: '#widgets', label: 'Widgets' },
-  { href: '#pricing', label: 'Pricing' },
+  { href: '/#platform', label: 'Platform' },
+  { href: '/#workflow', label: 'Workflow' },
+  { href: '/#integrations', label: 'Integrations' },
+  { href: '/#security', label: 'Security' },
+  { href: '/#pricing', label: 'Pricing' },
 ]
 
-const featureTags = ['Templates', 'Broadcasts', 'API Access']
+const metrics = [
+  { value: '12k+', label: 'workflow runs tracked' },
+  { value: '99.9%', label: 'platform uptime target' },
+  { value: '40+', label: 'planned integration types' },
+]
+
+const platformCards = [
+  {
+    icon: 'account_tree',
+    title: 'Visual workflow builder',
+    text: 'Design triggers, conditions, forms, webhooks, and actions on a canvas your operations team can understand.',
+  },
+  {
+    icon: 'hub',
+    title: 'Integration control plane',
+    text: 'Connect business systems once, then reuse them across departments without rebuilding every process.',
+  },
+  {
+    icon: 'monitoring',
+    title: 'Execution observability',
+    text: 'Watch payloads, webhook events, retries, and run status as automations move through the platform.',
+  },
+  {
+    icon: 'admin_panel_settings',
+    title: 'Enterprise governance',
+    text: 'Centralize access, audit trails, approval gates, and environment-specific workflow controls.',
+  },
+]
+
+const workflowSteps = [
+  'Webhook receives a customer or system event',
+  'Autofaya validates payload and maps fields',
+  'Workflow branches by department, SLA, or status',
+  'Actions update tools, notify teams, and record outcomes',
+]
+
+const integrations = ['Telegram', 'Forms', 'Webhooks', 'Iframes', 'CRM', 'ERP', 'Databases', 'Internal APIs']
 
 const pricingPlans = [
   {
-    name: 'Starter',
-    price: '$29',
-    period: '/month',
-    description: 'For small teams launching WhatsApp and web automation.',
-    features: ['1 shared inbox', 'Basic automation flows', 'Website widget', 'Email support'],
-    cta: 'Start Starter',
+    name: 'Builder',
+    price: '$49',
+    description: 'For teams starting with webhook and form automations.',
+    features: ['Visual workflow builder', 'Webhook event history', '5 active workflows', 'Email support'],
   },
   {
-    name: 'Growth',
-    price: '$99',
-    period: '/month',
-    description: 'For growing businesses that need AI and multi-channel workflows.',
-    features: ['5 team seats', 'AI chatbot training', 'Advanced flow builder', 'Priority support'],
-    cta: 'Start Growth',
+    name: 'Operations',
+    price: '$149',
+    description: 'For growing companies automating work across departments.',
+    features: ['Unlimited draft workflows', 'Advanced execution logs', 'Team collaboration', 'Priority support'],
     featured: true,
   },
   {
     name: 'Enterprise',
     price: 'Custom',
-    period: '',
-    description: 'For large operations with custom onboarding, scale, and compliance needs.',
-    features: ['Unlimited seats', 'Custom integrations', 'Dedicated success manager', 'SLA and security review'],
-    cta: 'Talk to Sales',
+    description: 'For regulated teams with scale, security, and integration requirements.',
+    features: ['Dedicated environments', 'Custom integrations', 'Security review', 'SLA and onboarding'],
   },
 ]
 
-const heroSlides = [image1, image2, image3, image4, image5, image6, image7, image8]
-
 type Theme = 'light' | 'dark'
+
+type LegalPageContent = {
+  eyebrow: string
+  title: string
+  updated: string
+  intro: string
+  sections: Array<{
+    title: string
+    text: string
+  }>
+}
+
+const legalPages: Record<string, LegalPageContent> = {
+  '/privacy-policy': {
+    eyebrow: 'Privacy Policy',
+    title: 'How Autofaya protects platform and workflow data.',
+    updated: 'May 12, 2026',
+    intro:
+      'This policy explains how Autofaya collects, uses, and protects information when teams use our automation, workflow, webhook, form, and integration services.',
+    sections: [
+      {
+        title: 'Information we collect',
+        text:
+          'We collect account information, workspace details, workflow configuration, webhook metadata, form submissions, usage logs, support messages, and billing or commercial information needed to provide the platform.',
+      },
+      {
+        title: 'How we use information',
+        text:
+          'We use information to authenticate users, operate workflows, store automation designs, provide support, improve platform reliability, detect abuse, meet security obligations, and communicate important service updates.',
+      },
+      {
+        title: 'Workflow and integration data',
+        text:
+          'Workflow payloads may include data sent by your connected systems. Customers are responsible for choosing what data enters Autofaya and configuring workflows according to their internal privacy and compliance requirements.',
+      },
+      {
+        title: 'Data sharing',
+        text:
+          'We do not sell customer data. We may share limited information with infrastructure, email, analytics, payment, security, and support providers that help us operate Autofaya under appropriate confidentiality protections.',
+      },
+      {
+        title: 'Security and retention',
+        text:
+          'We use technical and organizational safeguards to protect platform data. Data is retained for as long as needed to provide the service, meet legal obligations, resolve disputes, and maintain audit records.',
+      },
+      {
+        title: 'Your choices',
+        text:
+          'Workspace administrators can manage user access, delete workflows, and request assistance with data export or deletion. Some operational logs may remain for security, compliance, or backup purposes.',
+      },
+    ],
+  },
+  '/terms-condition': {
+    eyebrow: 'Terms & Conditions',
+    title: 'Terms for using Autofaya workflow automation.',
+    updated: 'May 12, 2026',
+    intro:
+      'These terms govern access to Autofaya, including the workflow builder, webhook triggers, forms, integrations, execution monitoring, and related enterprise automation services.',
+    sections: [
+      {
+        title: 'Use of the service',
+        text:
+          'You may use Autofaya to design, store, and operate business workflows in accordance with these terms, your subscription, and all applicable laws and internal authorization requirements.',
+      },
+      {
+        title: 'Accounts and access',
+        text:
+          'You are responsible for maintaining accurate account information, protecting credentials, and ensuring that users invited to your workspace have appropriate authority to access workflow and integration data.',
+      },
+      {
+        title: 'Customer data and workflows',
+        text:
+          'You retain ownership of your workflow definitions, webhook payloads, form submissions, and connected system data. You grant Autofaya the rights needed to host, process, transmit, and display that data to provide the service.',
+      },
+      {
+        title: 'Acceptable use',
+        text:
+          'You must not use Autofaya to violate laws, compromise third-party systems, send unauthorized messages, process prohibited data, bypass rate limits, or interfere with platform security or availability.',
+      },
+      {
+        title: 'Subscriptions and availability',
+        text:
+          'Paid plans, usage limits, support levels, and service commitments are defined by the applicable order, plan, or written agreement. We may update the platform to improve reliability, security, and functionality.',
+      },
+      {
+        title: 'Limitation of liability',
+        text:
+          'To the maximum extent permitted by law, Autofaya is not liable for indirect, incidental, special, consequential, or punitive damages arising from use of the platform or connected third-party services.',
+      },
+    ],
+  },
+}
 
 function getInitialTheme(): Theme {
   if (typeof window === 'undefined') {
@@ -65,18 +177,169 @@ function getInitialTheme(): Theme {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
-function App() {
-  const [activeHeroSlide, setActiveHeroSlide] = useState(0)
-  const [theme, setTheme] = useState<Theme>(getInitialTheme)
-  const currentYear = new Date().getFullYear()
+function WorkflowCanvas() {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   useEffect(() => {
-    const intervalId = window.setInterval(() => {
-      setActiveHeroSlide((currentSlide) => (currentSlide + 1) % heroSlides.length)
-    }, 3000)
+    const currentCanvas = canvasRef.current
+    if (!currentCanvas) {
+      return
+    }
 
-    return () => window.clearInterval(intervalId)
+    const currentContext = currentCanvas.getContext('2d')
+    if (!currentContext) {
+      return
+    }
+
+    const canvasElement: HTMLCanvasElement = currentCanvas
+    const canvasContext: CanvasRenderingContext2D = currentContext
+
+    let frame = 0
+    let animationId = 0
+    const nodes = [
+      { x: 0.18, y: 0.28, label: 'Webhook', color: '#0f8b8d' },
+      { x: 0.48, y: 0.28, label: 'Validate', color: '#2563eb' },
+      { x: 0.76, y: 0.28, label: 'Route', color: '#7c3aed' },
+      { x: 0.31, y: 0.66, label: 'Notify', color: '#ea580c' },
+      { x: 0.62, y: 0.66, label: 'Record', color: '#16a34a' },
+    ]
+
+    function draw() {
+      const rect = canvasElement.getBoundingClientRect()
+      const scale = window.devicePixelRatio || 1
+      canvasElement.width = rect.width * scale
+      canvasElement.height = rect.height * scale
+      canvasContext.setTransform(scale, 0, 0, scale, 0, 0)
+      canvasContext.clearRect(0, 0, rect.width, rect.height)
+
+      canvasContext.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--hero-canvas-bg')
+      canvasContext.fillRect(0, 0, rect.width, rect.height)
+
+      canvasContext.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--canvas-dot')
+      for (let x = 18; x < rect.width; x += 24) {
+        for (let y = 18; y < rect.height; y += 24) {
+          canvasContext.beginPath()
+          canvasContext.arc(x, y, 1.2, 0, Math.PI * 2)
+          canvasContext.fill()
+        }
+      }
+
+      const drawConnection = (from: (typeof nodes)[number], to: (typeof nodes)[number], offset = 0) => {
+        const x1 = from.x * rect.width
+        const y1 = from.y * rect.height
+        const x2 = to.x * rect.width
+        const y2 = to.y * rect.height
+        const pulse = (Math.sin(frame * 0.04 + offset) + 1) / 2
+
+        canvasContext.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--canvas-line')
+        canvasContext.lineWidth = 2
+        canvasContext.beginPath()
+        canvasContext.moveTo(x1, y1)
+        canvasContext.bezierCurveTo((x1 + x2) / 2, y1, (x1 + x2) / 2, y2, x2, y2)
+        canvasContext.stroke()
+
+        canvasContext.fillStyle = '#0f8b8d'
+        const px = x1 + (x2 - x1) * pulse
+        const py = y1 + (y2 - y1) * pulse
+        canvasContext.beginPath()
+        canvasContext.arc(px, py, 4, 0, Math.PI * 2)
+        canvasContext.fill()
+      }
+
+      drawConnection(nodes[0], nodes[1], 0)
+      drawConnection(nodes[1], nodes[2], 1.2)
+      drawConnection(nodes[1], nodes[3], 2.1)
+      drawConnection(nodes[2], nodes[4], 3.2)
+
+      nodes.forEach((node) => {
+        const x = node.x * rect.width
+        const y = node.y * rect.height
+
+        canvasContext.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--canvas-card')
+        canvasContext.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--canvas-card-border')
+        canvasContext.lineWidth = 1
+        roundRect(canvasContext, x - 58, y - 28, 116, 56, 8)
+        canvasContext.fill()
+        canvasContext.stroke()
+
+        canvasContext.fillStyle = node.color
+        canvasContext.beginPath()
+        canvasContext.arc(x - 34, y, 12, 0, Math.PI * 2)
+        canvasContext.fill()
+
+        canvasContext.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--canvas-text')
+        canvasContext.font = '700 13px Manrope, sans-serif'
+        canvasContext.fillText(node.label, x - 12, y + 5)
+      })
+
+      frame += 1
+      animationId = window.requestAnimationFrame(draw)
+    }
+
+    draw()
+
+    return () => window.cancelAnimationFrame(animationId)
   }, [])
+
+  return <canvas ref={canvasRef} className="workflow-canvas" aria-label="Animated workflow diagram" />
+}
+
+function roundRect(
+  context: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  radius: number,
+) {
+  context.beginPath()
+  context.moveTo(x + radius, y)
+  context.arcTo(x + width, y, x + width, y + height, radius)
+  context.arcTo(x + width, y + height, x, y + height, radius)
+  context.arcTo(x, y + height, x, y, radius)
+  context.arcTo(x, y, x + width, y, radius)
+  context.closePath()
+}
+
+function getLegalPage(pathname: string) {
+  return legalPages[pathname] ?? null
+}
+
+function LegalPage({ page }: { page: LegalPageContent }) {
+  return (
+    <main className="legal-page">
+      <section className="legal-hero">
+        <span>{page.eyebrow}</span>
+        <h1>{page.title}</h1>
+        <p>{page.intro}</p>
+        <div className="legal-updated">Last updated: {page.updated}</div>
+      </section>
+
+      <section className="legal-content">
+        {page.sections.map((section) => (
+          <article className="legal-section" key={section.title}>
+            <h2>{section.title}</h2>
+            <p>{section.text}</p>
+          </article>
+        ))}
+        <div className="legal-note">
+          <strong>Contact</strong>
+          <p>
+            Questions about these terms can be sent to{' '}
+            <a href="mailto:legal@autofaya.com">legal@autofaya.com</a>.
+          </p>
+        </div>
+      </section>
+    </main>
+  )
+}
+
+function App() {
+  const [theme, setTheme] = useState<Theme>(getInitialTheme)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const currentYear = new Date().getFullYear()
+  const legalPage =
+    typeof window === 'undefined' ? null : getLegalPage(window.location.pathname)
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -88,8 +351,8 @@ function App() {
     <div className="page-shell">
       <nav className="top-nav" id="top-nav">
         <div className="nav-inner">
-          <a className="brand" href="#">
-            <img className="brand-logo" src={logo} alt="Autofaya Logo" />
+          <a className="brand" href="/">
+            <img className="brand-logo" src={logo} alt="Autofaya" />
             <span>Autofaya</span>
           </a>
 
@@ -116,275 +379,200 @@ function App() {
             <a className="login-link" href="/login">
               Login
             </a>
-            <a className="primary-button small" href="/signup">
-              Get Started
+            <a className="primary-button small" href="/#contact">
+              Book Demo
             </a>
-            <button className="menu-toggle" type="button" aria-label="Open menu">
-              <span className="material-symbols-outlined">menu</span>
+            <button
+              className="menu-toggle"
+              type="button"
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={isMenuOpen}
+              onClick={() => setIsMenuOpen((open) => !open)}
+            >
+              <span className="material-symbols-outlined">{isMenuOpen ? 'close' : 'menu'}</span>
             </button>
           </div>
         </div>
+        <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+          {navLinks.map((link) => (
+            <a key={link.label} href={link.href} onClick={() => setIsMenuOpen(false)}>
+              {link.label}
+            </a>
+          ))}
+          <a href="/login" onClick={() => setIsMenuOpen(false)}>
+            Login
+          </a>
+          <a className="primary-button small" href="/#contact" onClick={() => setIsMenuOpen(false)}>
+            Book Demo
+          </a>
+        </div>
       </nav>
 
+      {legalPage ? (
+        <LegalPage page={legalPage} />
+      ) : (
       <main>
         <section className="hero-section">
-          <div className="hero-content-grid">
-            <div className="hero-copy">
-              <h1>Automate every customer conversation from one place.</h1>
-              <p>
-                Build powerful flows across WhatsApp, AI chatbots, email, and website widgets.
-                Connect with your customers where they already are, instantly.
-              </p>
-
-              <div className="hero-actions">
-                <a className="primary-button" href="#">
-                  Start Free
-                </a>
-                <a className="secondary-button" href="#">
-                  Book Demo
-                </a>
-              </div>
-            </div>
-
-            <div className="hero-demo">
-              <div className="dashboard-window">
-                <div className="browser-chrome">
-                  <span />
-                  <span />
-                  <span />
-                </div>
-
-                <div className="dashboard-layout">
-                  <aside className="dashboard-sidebar">
-                    <div className="sidebar-icon active">
-                      <span className="material-symbols-outlined">forum</span>
-                    </div>
-                    <div className="sidebar-icon">
-                      <span className="material-symbols-outlined">account_tree</span>
-                    </div>
-                    <div className="sidebar-icon">
-                      <span className="material-symbols-outlined">group</span>
-                    </div>
-                    <div className="sidebar-icon">
-                      <span className="material-symbols-outlined">bar_chart</span>
-                    </div>
-                  </aside>
-
-                  <section className="inbox-panel">
-                    <div className="panel-title">Active Chats</div>
-                    <div className="chat-list">
-                      <div className="chat-row">
-                        <div className="chat-avatar whatsapp">W</div>
-                        <div>
-                          <div className="chat-title">WhatsApp Lead</div>
-                          <div className="chat-text">How much is pricing?</div>
-                        </div>
-                      </div>
-                      <div className="chat-row selected">
-                        <div className="chat-avatar primary">W</div>
-                        <div>
-                          <div className="chat-title">Website Widget</div>
-                          <div className="chat-text">I need help with...</div>
-                        </div>
-                      </div>
-                      <div className="chat-row">
-                        <div className="chat-avatar email">E</div>
-                        <div>
-                          <div className="chat-title">Email Inquiry</div>
-                          <div className="chat-text">Demo request</div>
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-
-                  <section className="flow-builder">
-                    <div className="flow-grid" aria-hidden="true" />
-                    <div className="flow-content">
-                      <div className="flow-card flow-card-strong">
-                        <div className="flow-card-title">Incoming Message</div>
-                        <div className="flow-card-subtitle">From Any Channel</div>
-                      </div>
-
-                      <div className="flow-line vertical" />
-
-                      <div className="flow-card flow-card-ai">
-                        <div className="flow-badge">AI Active</div>
-                        <div className="flow-card-title">Analyze Intent</div>
-                      </div>
-
-                      <div className="flow-line vertical" />
-
-                      <div className="flow-actions-branch">
-                        <div className="flow-branch">
-                          <div className="flow-line horizontal left" />
-                          <div className="flow-action whatsapp-fill">Send WhatsApp</div>
-                        </div>
-                        <div className="flow-branch">
-                          <div className="flow-line horizontal right" />
-                          <div className="flow-action">Assign to Human</div>
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-                </div>
-              </div>
+          <WorkflowCanvas />
+          <div className="hero-overlay" />
+          <div className="hero-content">
+            <span className="hero-kicker">Enterprise automation platform</span>
+            <h1>Autofaya runs the workflows behind modern operations.</h1>
+            <p>
+              Build event-driven automations across webhooks, forms, messaging tools,
+              internal systems, and human approvals with one visual control plane.
+            </p>
+            <div className="hero-actions">
+              <a className="primary-button" href="/#contact">
+                Talk to Sales
+              </a>
+              <a className="secondary-button" href="/#workflow">
+                See Workflow Engine
+              </a>
             </div>
           </div>
         </section>
 
-        <section className="features-section">
+        <section className="metrics-band" aria-label="Autofaya platform metrics">
+          {metrics.map((metric) => (
+            <div key={metric.label}>
+              <strong>{metric.value}</strong>
+              <span>{metric.label}</span>
+            </div>
+          ))}
+        </section>
+
+        <section className="platform-section" id="platform">
           <div className="section-heading">
-            <h2>Precision tools for modern customer communication.</h2>
+            <span>Platform</span>
+            <h2>One place to design, run, and observe business workflows.</h2>
+            <p>
+              Autofaya gives operations, support, sales, and engineering teams a shared
+              automation layer without forcing every process into custom code.
+            </p>
           </div>
 
-          <div className="feature-grid">
-            <article className="feature-card feature-card-wide" id="whatsapp">
-              <div className="feature-card-top">
-                <div>
-                  <h3>WhatsApp Automation</h3>
-                  <p>
-                    Build dynamic conversational flows on the world&apos;s most popular
-                    messaging app. Native integration, no code required.
-                  </p>
+          <div className="platform-grid">
+            {platformCards.map((card) => (
+              <article className="platform-card" key={card.title}>
+                <div className="feature-icon">
+                  <span className="material-symbols-outlined">{card.icon}</span>
                 </div>
-                <div className="feature-icon whatsapp-icon">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path
-                      fill="currentColor"
-                      d="M19.05 4.91A9.82 9.82 0 0 0 12.03 2C6.56 2 2.1 6.45 2.1 11.93c0 1.75.46 3.47 1.33 4.98L2 22l5.25-1.38a9.9 9.9 0 0 0 4.77 1.22h.01c5.47 0 9.93-4.45 9.93-9.93a9.86 9.86 0 0 0-2.91-7ZM12.03 20.16h-.01a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.12.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.53 3.69-8.22 8.24-8.22a8.15 8.15 0 0 1 5.82 2.41 8.17 8.17 0 0 1 2.4 5.82c0 4.53-3.69 8.22-8.22 8.22Zm4.5-6.17c-.25-.12-1.47-.73-1.7-.82-.23-.08-.4-.12-.57.12-.17.25-.65.82-.8.98-.15.17-.3.19-.55.06-.25-.12-1.07-.39-2.04-1.25-.75-.67-1.26-1.49-1.41-1.74-.15-.25-.02-.38.1-.5.11-.11.25-.3.37-.45.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.57-1.37-.78-1.88-.2-.49-.41-.42-.57-.43h-.49c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.43 1.03 2.6.12.17 1.77 2.7 4.28 3.79.6.26 1.06.42 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.19.21-.59.21-1.1.15-1.19-.06-.08-.23-.12-.48-.25Z"
-                    />
-                  </svg>
-                </div>
-              </div>
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
 
-              <div className="tag-row">
-                {featureTags.map((tag) => (
-                  <span key={tag} className="feature-tag">
-                    {tag}
-                  </span>
-                ))}
+        <section className="workflow-section" id="workflow">
+          <div className="workflow-copy">
+            <span>Workflow Engine</span>
+            <h2>Trigger, inspect, branch, and execute.</h2>
+            <p>
+              Start with webhook and form triggers, inspect live payloads as they arrive,
+              then route data through actions and human checkpoints.
+            </p>
+          </div>
+          <div className="workflow-diagram" aria-label="Workflow execution lifecycle">
+            {workflowSteps.map((step, index) => (
+              <div className="diagram-step" key={step}>
+                <div className="step-index">{index + 1}</div>
+                <p>{step}</p>
               </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="integrations-section" id="integrations">
+          <div className="section-heading compact">
+            <span>Integrations</span>
+            <h2>Begin simple. Expand into every system your company depends on.</h2>
+          </div>
+          <div className="integration-cloud">
+            {integrations.map((integration) => (
+              <span key={integration}>{integration}</span>
+            ))}
+          </div>
+        </section>
+
+        <section className="security-section" id="security">
+          <div>
+            <span>Enterprise Readiness</span>
+            <h2>Designed for teams that need control, not chaos.</h2>
+          </div>
+          <div className="security-grid">
+            <article>
+              <strong>Audit-ready runs</strong>
+              <p>Every trigger, payload, run, and action can be inspected for operational review.</p>
             </article>
-
-            <article className="feature-card" id="ai-chatbots">
-              <div>
-                <div className="feature-icon primary-icon">
-                  <span className="material-symbols-outlined">smart_toy</span>
-                </div>
-                <h3>AI Chatbots</h3>
-                <p>
-                  Train AI on your knowledge base to resolve 80% of tier 1 support queries
-                  instantly.
-                </p>
-              </div>
+            <article>
+              <strong>Environment separation</strong>
+              <p>Keep development, staging, and production workflows controlled as teams scale.</p>
             </article>
-
-            <article className="feature-card" id="widgets">
-              <div>
-                <div className="feature-icon neutral-icon">
-                  <span className="material-symbols-outlined">schema</span>
-                </div>
-                <h3>Visual Flows</h3>
-                <p>
-                  Drag-and-drop canvas to design complex multi-channel customer journeys.
-                </p>
-              </div>
-            </article>
-
-            <article className="feature-card feature-card-dark" id="email">
-              <div className="feature-dark-copy">
-                <h3>Shared Team Inbox</h3>
-                <p>
-                  Unify WhatsApp, Email, and Web Widgets into a single collaborative
-                  workspace for your support and sales teams.
-                </p>
-                <a className="feature-link" href="#">
-                  Explore Inbox Features
-                  <span className="material-symbols-outlined">arrow_forward</span>
-                </a>
-              </div>
-
-              <div className="feature-dark-panel">
-                <div className="feature-dark-row">
-                  <span className="feature-dark-dot green" />
-                  <span className="feature-dark-line short" />
-                </div>
-                <div className="feature-dark-row active">
-                  <span className="feature-dark-dot blue" />
-                  <span className="feature-dark-line long" />
-                </div>
-              </div>
+            <article>
+              <strong>Role-based workspaces</strong>
+              <p>Give builders, operators, and administrators the right level of access.</p>
             </article>
           </div>
         </section>
 
         <section className="pricing-section" id="pricing">
-          <div className="section-heading pricing-heading">
-            <h2>Simple pricing for teams shipping faster conversations.</h2>
-            <p>Choose a plan that fits your stage, then scale channels, automations, and support as you grow.</p>
+          <div className="section-heading compact">
+            <span>Plans</span>
+            <h2>Automation plans for teams from builder to enterprise.</h2>
           </div>
-
           <div className="pricing-grid">
             {pricingPlans.map((plan) => (
               <article
+                className={plan.featured ? 'pricing-card featured' : 'pricing-card'}
                 key={plan.name}
-                className={plan.featured ? 'pricing-card pricing-card-featured' : 'pricing-card'}
               >
-                {plan.featured ? <div className="pricing-badge">Most Popular</div> : null}
-                <div>
-                  <h3>{plan.name}</h3>
-                  <div className="pricing-value">
-                    <span className="pricing-amount">{plan.price}</span>
-                    {plan.period ? <span className="pricing-period">{plan.period}</span> : null}
-                  </div>
-                  <p>{plan.description}</p>
-                </div>
-
-                <ul className="pricing-features">
+                {plan.featured ? <div className="pricing-badge">Recommended</div> : null}
+                <h3>{plan.name}</h3>
+                <div className="pricing-value">{plan.price}</div>
+                <p>{plan.description}</p>
+                <ul>
                   {plan.features.map((feature) => (
                     <li key={feature}>
-                      <span className="pricing-check" aria-hidden="true" />
-                      <span>{feature}</span>
+                      <span className="material-symbols-outlined">check</span>
+                      {feature}
                     </li>
                   ))}
                 </ul>
-
-                <a className={plan.featured ? 'primary-button pricing-button' : 'secondary-button pricing-button'} href="#">
-                  {plan.cta}
+                <a className={plan.featured ? 'primary-button' : 'secondary-button'} href="/#contact">
+                  {plan.name === 'Enterprise' ? 'Contact Sales' : 'Start Building'}
                 </a>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="slider-section" aria-label="Autofaya product gallery">
-          <div className="hero-background">
-            <div className="hero-slideshow">
-              {heroSlides.map((imageSrc, index) => (
-                <div
-                  key={imageSrc}
-                  className={index === activeHeroSlide ? 'hero-slide active' : 'hero-slide'}
-                >
-                  <img src={imageSrc} alt="" />
-                </div>
-              ))}
-            </div>
+        <section className="cta-section" id="contact">
+          <div>
+            <span>Ready for workflow automation?</span>
+            <h2>Build the automation layer your teams can actually operate.</h2>
           </div>
+          <a className="primary-button" href="mailto:sales@autofaya.com">
+            Schedule Enterprise Demo
+          </a>
         </section>
       </main>
+      )}
 
-      <footer className="site-footer" id="footer">
+      <footer className="site-footer">
         <div className="footer-inner">
           <div className="footer-brand">Autofaya</div>
           <nav className="footer-links">
-            <a href="#product">Product</a>
-            <a href="#features">Features</a>
-            <a href="#security">Security</a>
-            <a href="#privacy-policy">Privacy Policy</a>
-            <a href="#terms-of-service">Terms of Service</a>
-            <a href="#contact">Contact</a>
+            <a href="/#platform">Platform</a>
+            <a href="/#workflow">Workflow</a>
+            <a href="/#integrations">Integrations</a>
+            <a href="/#security">Security</a>
+            <a href="/#pricing">Pricing</a>
+            <a href="/privacy-policy">Privacy Policy</a>
+            <a href="/terms-condition">Terms</a>
           </nav>
-          <div className="footer-copy">© {currentYear} Autofaya. Precision Engineering for Communication.</div>
+          <div className="footer-copy">&copy; {currentYear} Autofaya. Enterprise workflow automation.</div>
         </div>
       </footer>
     </div>
