@@ -376,7 +376,7 @@ function App() {
                 {theme === 'dark' ? 'light_mode' : 'dark_mode'}
               </span>
             </button>
-            <a className="login-link" href="/login">
+            <a className="login-link" href="https://app.autofaya.com" target="_blank" rel="noopener noreferrer">
               Login
             </a>
             <a className="primary-button small" href="/#contact">
@@ -399,7 +399,7 @@ function App() {
               {link.label}
             </a>
           ))}
-          <a href="/login" onClick={() => setIsMenuOpen(false)}>
+          <a href="https://app.autofaya.com" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>
             Login
           </a>
           <a className="primary-button small" href="/#contact" onClick={() => setIsMenuOpen(false)}>
